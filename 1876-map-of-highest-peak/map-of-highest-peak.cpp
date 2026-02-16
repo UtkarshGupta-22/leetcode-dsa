@@ -30,7 +30,7 @@ public:
                 int nx = x + dx[l];
                 int ny = y + dy[l];
 
-                if(nx >= 0 && nx < m && ny >= 0 && ny < n && height[nx][ny] == -1) {
+                if(nx >= 0 && nx < m && ny>=0 && ny<n && height[nx][ny] == -1) {
                     height[nx][ny] = height[x][y] + 1;
                     q.push(make_pair(nx,ny));
                 }
