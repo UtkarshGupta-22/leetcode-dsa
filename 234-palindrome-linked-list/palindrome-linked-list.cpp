@@ -10,34 +10,19 @@
  */
 class Solution {
 public:
-    bool isPalindrome(ListNode* head) { 
-        if(head==NULL || head->next==NULL) return true;
+    ListNode* curr;
+    bool recur(ListNode* head){
+        if(head==NULL) return true;
 
-        ListNode* slow = head;
-        ListNode* fast = head;
-        ListNode* prev = NULL;
+        bool ans = recur(head->next);
 
-        while(fast && fast->next){
-            fast = fast->next->next;
-            ListNode* temp = slow->next;
-            slow->next = prev;
-            prev = slow;
-            slow = temp;
+        if(head->val != curr->val) return false;
 
-        }
-
-        if(fast){
-            slow = slow->next;
-        }
-
-        while(prev && slow){
-            if(prev->val!=slow->val){
-                return false;
-            }
-            prev = prev->next;
-            slow = slow->next;
-        }
-        return true;
-
+        curr = curr->next;
+        return ans;
+    }
+    bool isPalindrome(ListNode* head) {
+        curr = head;
+        return recur(curr);
     }
 };
