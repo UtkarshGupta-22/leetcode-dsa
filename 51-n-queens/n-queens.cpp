@@ -1,6 +1,9 @@
 class Solution {
 public:
     vector<vector<string>> result;
+    unordered_set<int> cols;
+    unordered_set<int> diag;
+    unordered_set<int> antiDiag;
     int N;
 
     bool isValid(vector<string>& board, int row, int col){
@@ -31,13 +34,24 @@ public:
         }
 
         for(int col=0; col<N; col++){
-            if(isValid(board, row, col)){
-                board[row][col] = 'Q';
+            int diagConstant = row+col;
+            int antiDiagConst = row-col;
 
-                solve(board, row+1);
-
-                board[row][col] = '.';
+            if(cols.find(col) != cols.end() || diag.find(diagConstant) != diag.end() || antiDiag.find(antiDiagConst) != antiDiag.end()){
+                continue;
             }
+
+            cols.insert(col);
+            diag.insert(diagConstant);
+            antiDiag.insert(antiDiagConst);
+            board[row][col] = 'Q';
+
+            solve(board,row+1);
+
+            cols.erase(col);
+            diag.erase(diagConstant);
+            antiDiag.erase(antiDiagConst);
+            board[row][col] = '.';
         }
     }
     vector<vector<string>> solveNQueens(int n) {
