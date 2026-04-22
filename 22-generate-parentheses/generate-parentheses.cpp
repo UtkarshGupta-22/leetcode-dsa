@@ -1,36 +1,46 @@
 class Solution {
-public:
-    vector<string> generateParenthesis(int n) {
-        vector<string> all;
-        string partial;
-        int left=0,right=0;
+public: 
+    vector<string> result;
 
-        dfs(n,left,right,partial,all);
-        return all;
-    }
+    bool isValid(string str){
+        int count=0;
 
-    private:
-        void dfs(const int n, int left, int right, string &partial, vector<string>&all){
-            if(left==n && right==n) all.push_back(partial);
-            else {
-                if(left<n){
-                    partial.push_back('(');
-                    dfs(n,left+1, right, partial, all);
-                    partial.pop_back();
-                }
-                else{
-
-                }
-
-                if(left>right){
-                    partial.push_back(')');
-                     dfs(n, left, right+1, partial, all);
-                    partial.pop_back();
-                }
-                else{
-                    //Branch pruning
-                }
+        for(char ch: str){
+            if(ch == '('){
+                count++;
+            }
+            else{
+                count--;
+            }
+            if(count<0){
+                return false;
             }
         }
-        
+        return count==0;
+    }
+
+    void solve(string& curr, int n){
+        if(curr.length() == 2*n){
+            if(isValid(curr)){
+                result.push_back(curr);
+            }
+            return;
+        }
+        curr.push_back('(');
+        solve(curr,n);
+        curr.pop_back();
+
+        curr.push_back(')');
+        solve(curr,n);
+        curr.pop_back();
+
+    }
+
+    vector<string> generateParenthesis(int n) {
+         string curr = "";
+
+         solve(curr, n);
+
+         return result;
+    }
 };
