@@ -6,10 +6,9 @@ public:
             return false;
         }
         if(arr[i]==0) return true;
-        int jump = arr[i];
         arr[i] *= -1;
-        bool a = Solve(arr, i - jump);
-        bool b = Solve(arr, i + jump);
+        bool a = Solve(arr, i - arr[i]);
+        bool b = Solve(arr, i + arr[i]);
 
         return a || b;
     }
