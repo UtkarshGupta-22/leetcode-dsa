@@ -1,35 +1,32 @@
 class Solution {
 public:
     void nextPermutation(vector<int>& nums) {
-    int n = nums.size();
-    int idx =-1;
-    for(int i=n-2; i>=0; i--){ 
-       if(nums[i]<nums[i+1]){
-        idx = i;
-        break;
+        int n = nums.size();
+
+        //first find the blue gola
+        int gola_index=-1;
+
+        for(int i=n-1; i>0; i--){
+            if(nums[i] > nums[i-1]){
+                gola_index=i-1;
+                break;
+            }
         }
-    }        
-    if(idx==-1){ //If array is already the greatest
-    reverse(nums.begin(),nums.end());
-    return;
+
+        if(gola_index!=-1){
+            int swap_index = gola_index;
+
+            for(int j=n-1; j>= gola_index + 1; j--){
+                if(nums[j] > nums[gola_index]){
+                    swap_index = j;
+                    break;
+                }
+            }
+
+            swap(nums[gola_index],nums[swap_index]);
+           
+        }
+            reverse(nums.begin() + gola_index + 1,nums.end());
 
     }
-
-    //Soritng/reversing after the pivot
-    reverse(nums.begin()+idx+1,nums.end());
-//3. Finding the just greater element
-    int j=-1;
-    for(int i=idx+1; i<n; i++){
-        if(nums[i]>nums[idx]){
-            j=i;
-            break;
-        }
-    }
-    //4. Swapping idx and j
-    int temp = nums[idx];
-    nums[idx] = nums[j];
-    nums[j] = temp;
-    return;
-    }
-    
 };
