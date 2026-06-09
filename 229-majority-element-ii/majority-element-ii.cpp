@@ -1,35 +1,55 @@
+//check about count1 and count2 value to be zero at the last.
 class Solution {
 public:
-    vector<int> majorityElement(vector<int>& v) {
-    int cnt1=0,cnt2=0;
-    int el1 = INT_MIN;
-    int el2 = INT_MIN;
+    vector<int> majorityElement(vector<int>& nums) {
+        int n = nums.size();
 
-    for(int i=0; i<v.size(); i++){
-        if(cnt1==0 && el2!=v[i]){
-            cnt1 = 1;
-            el1 = v[i];
+        int count1=0;
+        int maj1 = 0;
+        int count2=0;
+        int maj2 = 0;
+
+        for(int i=0; i<n; i++){
+            if(nums[i]==maj1){
+                count1++;
+            }
+            else if(nums[i] == maj2){
+                count2++;
+            }
+            else if(count1==0){
+                maj1 = nums[i];
+                count1++;
+            }
+            else if (count2==0){
+                maj2 = nums[i];
+                count2++; 
+            }
+            else{
+                count1--;
+                count2--;
+            }
         }
-        else if(cnt2==0 && el1!=v[i]){
-            cnt2 = 1;
-            el2 = v[i];
+
+        vector<int>result;
+        int freq1=0;
+        int freq2=0;
+
+        for(int &num : nums){
+            if(num == maj1){
+                freq1++;
+            }
+            else if(num == maj2 ){
+                freq2++;
+            }
         }
-        else if(v[i] == el1) cnt1++;
-        else if(v[i]==el2) cnt2++;
-        else{
-            cnt1--,cnt2--;
+        if(freq1 > floor(n/3)){
+            result.push_back(maj1);
         }
-    }
-    vector<int> ls;
-    cnt1=0,cnt2=0;
-    for(int i=0; i<v.size(); i++){
-        if(el1 == v[i]) cnt1++;
-        if(el2 == v[i]) cnt2++;
-    }
-    int mini = (int)(v.size()/3) + 1;
-    if(cnt1 >= mini) ls.push_back(el1);
-    if(cnt2 >= mini) ls.push_back(el2);
-    sort(ls.begin(),ls.end());
-    return ls;
+        if(freq2 > floor(n/3)){
+            result.push_back(maj2);
+        }
+        return result;
+
+
     }
 };
