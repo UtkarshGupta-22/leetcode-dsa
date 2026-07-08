@@ -1,23 +1,23 @@
 class Solution {
 public:
-    void sortColors(vector<int>& arr) {
-        //Dutch Flag Algorithm
-        int n = arr.size();
-        int low, mid=0;
-        int high = n-1;
-        while(mid<=high){
-            if(arr[mid]==0) {
-                swap(arr[mid],arr[low]);
-                low++;
-                mid++;
+    void sortColors(vector<int>& nums) {
+        int n = nums.size();
+        int i=0; //denotes 0
+        int j=0; //1
+        int k=n-1; //2
+
+        while(j<=k){
+            if(nums[j]==1) j++;
+            else if(nums[j]==2){
+                swap(nums[j],nums[k]);
+                k--;
             }
-            else if(arr[mid]==1) {
-                mid++;
-            }
-            else {
-                swap(arr[mid],arr[high]);
-                high--;
+            else{
+                swap(nums[i],nums[j]);
+                i++;
+                j++;
             }
         }
+        
     }
 };
