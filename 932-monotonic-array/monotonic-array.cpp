@@ -1,23 +1,20 @@
 class Solution {
 public:
     bool isMonotonic(vector<int>& nums) {
-
         int n = nums.size();
-        bool increasing = false;
-        bool decreasing = false;
+
+        bool INC = false;
+        bool DES = false;
 
         for(int i=0; i<n-1; i++){
-            if(nums[i] < nums[i+1]){
-                increasing = true;
+            if(nums[i]<nums[i+1]){
+                INC = true;
             }
             if(nums[i+1] < nums[i]){
-                decreasing = true;
+                DES = true;
             }
-
-        }
-        if(increasing==true && decreasing == true)
-            return false;
+        } 
+        if(INC && DES) return false;
         return true;
-
     }
 };
