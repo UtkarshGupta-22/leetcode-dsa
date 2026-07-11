@@ -10,19 +10,24 @@
  */
 class Solution {
 public:
-    ListNode* curr;
-    bool recur(ListNode* head){
-        if(head==NULL) return true;
-
-        bool ans = recur(head->next);
-
-        if(head->val != curr->val) return false;
-
-        curr = curr->next;
-        return ans;
-    }
     bool isPalindrome(ListNode* head) {
-        curr = head;
-        return recur(curr);
+        if(head==NULL || head->next==NULL) return true;
+
+        stack<int> st;
+        ListNode* temp = head;
+        while(temp!=NULL){
+            st.push(temp->val);
+            temp = temp->next;
+        }
+        temp = head;
+        while(st.empty()!=true){
+            if(temp->val != st.top()){
+                return false;
+            }
+            st.pop();
+            temp = temp->next;
+        }
+        return true;
+
     }
 };
