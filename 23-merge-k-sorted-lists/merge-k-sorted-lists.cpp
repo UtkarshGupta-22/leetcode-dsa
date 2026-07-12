@@ -26,11 +26,12 @@ public:
 
         while(!pq.empty()){
             auto it = pq.top();
+                        temp->next = it.second;
+
             pq.pop();
             if(it.second->next){
                 pq.push({it.second->next->val,it.second->next});
             }
-            temp->next = it.second;
             temp = temp->next;
         }
         return dummyNode->next;
