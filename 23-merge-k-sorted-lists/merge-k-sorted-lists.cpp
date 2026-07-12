@@ -10,44 +10,31 @@
  */
 class Solution {
 public:
-
-    ListNode* MergetwoLists(ListNode* l1, ListNode* l2){
-
-        if(l1==NULL) return l2;
-        if(l2==NULL) return l1;
-
-
-        if(l1->val <= l2->val){
-            l1->next = MergetwoLists(l1->next,l2);
-
-            return l1;
-        }
-        else{
-            l2->next = MergetwoLists(l1,l2->next);
-
-            return l2;
-        }
-
-    }
-    ListNode* PartitionandMerge(int start, int end, vector<ListNode*>& lists){
-
-        if(start==end) return lists[start];
-
-        if(start>end) return NULL;
-
-        int mid = start + (end-start)/2;
-
-        ListNode* L1 = PartitionandMerge(start,mid,lists);
-        ListNode* L2 = PartitionandMerge(mid+1,end,lists);
-
-        return MergetwoLists(L1, L2);
-    }
-
     ListNode* mergeKLists(vector<ListNode*>& lists) {
-        int k = lists.size();
+        int n = lists.size();
 
-        if(k==0) return NULL;
+        priority_queue<pair<int,ListNode*>,vector<pair<int,ListNode*>>,greater<pair<int,ListNode*>>> pq;
 
-        return PartitionandMerge(0,k-1,lists);
+        for(int i=0; i<n; i++){
+            if(lists[i]){
+                pq.push({lists[i]->val,lists[i]});
+            }
+        }
+
+        ListNode* dummyNode = new ListNode(-1);
+        ListNode* temp = dummyNode;
+
+        while(!pq.empty()){
+            auto it = pq.top();
+            pq.pop();
+            if(it.second->next){
+                pq.push({it.second->next->val,it.second->next});
+            }
+            temp->next = it.second;
+            temp = temp->next;
+        }
+        return dummyNode->next;
+
+
     }
 };
