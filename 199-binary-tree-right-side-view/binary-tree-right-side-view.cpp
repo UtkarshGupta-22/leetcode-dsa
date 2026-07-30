@@ -10,21 +10,23 @@
  * };
  */
 class Solution {
-public: 
-    void preOrder(TreeNode* root, int level, vector<int> &result){
+public:
+    void preOrder(TreeNode* root, int level, vector<int>&result){}
+    vector<int> rightSideView(TreeNode* root) {
+        vector<int>res;
+        tree(root,0,res);
+        return res;
+
+
+    }
+
+    void tree(TreeNode* root, int level, vector<int>& res){
         if(root==NULL) return;
 
-        if(result.size()<level){
-            result.push_back(root->val);
+        if(level == res.size()){
+            res.push_back(root->val);
         }
-        preOrder(root->right,level+1,result);
-        preOrder(root->left,level+1,result);
-    }
-    vector<int> rightSideView(TreeNode* root) {
-        vector<int> result;
-
-        preOrder(root,1,result);
-
-        return result;
+        tree(root->right,level+1,res);
+        tree(root->left,level+1,res);
     }
 };
