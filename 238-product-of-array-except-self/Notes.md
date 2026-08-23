@@ -1,1 +1,1 @@
-<h2>product-of-array-except-self Notes</h2><hr>[ Time taken: 13m 44s ]
+<h2>product-of-array-except-self Notes</h2><hr>[ Time taken: 21m 49s ]
