@@ -12,24 +12,14 @@
 class Solution {
 public:
     vector<int> rightSideView(TreeNode* root) {
-        if(root==NULL) return {};
-        vector<int> ans;
-        queue<TreeNode*> q;
-        q.push(root);
-        while(!q.empty()){
-            
-            int n = q.size();
-            TreeNode* node = NULL;
-
-            while(n--){
-            node = q.front();
-            q.pop();
-            if(node->left!=NULL) q.push(node->left);
-            if(node->right!=NULL) q.push(node->right);
-            }
-            ans.push_back(node->val);
-        }
-
-        return ans;
+        vector<int> res;
+        recursion(root,res,0);
+        return res;
+    }
+    void recursion(TreeNode* root, vector<int>&res, int level){
+        if(root==NULL) return;
+        if(level==res.size()) res.push_back(root->val);
+        recursion(root->right,res,level+1);
+        recursion(root->left,res,level+1);
     }
 };
